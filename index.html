@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стоматология Ыссык-Коль</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
+
+        :root {
+            --primary: #00C2FF;
+            --secondary: #2A2D34;
+            --accent: #FF5E5B;
+            --text: #FDFFFC;
+            --gradient: linear-gradient(135deg, #00C2FF 0%, #0066FF 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--secondary);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Шапка */
+        .header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(42, 45, 52, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 250px;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 150px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Бургер-меню */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px;
+            background: var(--text);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            /* background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                  url('https://plus.unsplash.com/premium_photo-1661506696379-f1e80632d4a6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover; */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('./img/bg.jpg') center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 300ms forwards 300ms;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* font-family: "Rubik Mono One", serif; */
+            font-family: "Jura", serif;
+            font-optical-sizing: auto;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            padding: 1rem 2.5rem;
+            background: var(--gradient);
+            border: none;
+            border-radius: 50px;
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .cta-button:hover::after {
+            left: 100%;
+        }
+
+        /* Секции */
+        section {
+            padding: 8rem 5%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 1s;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        /* Услуги */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Слайдер (новая секция) */
+        .slider-section {
+            padding: 8rem 5%;
+            position: relative;
+            text-align: center;
+        }
+
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 30%;
+            height: 100%;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            backface-visibility: hidden;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Изображения обрезаются по размеру контейнера */
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Состояния слайдов */
+        .slide.active {
+            transform: translateX(0) scale(1) rotateY(0);
+            opacity: 1;
+            z-index: 3;
+        }
+
+        .slide.prev {
+            transform: translateX(-120%) scale(0.8) rotateY(25deg);
+            opacity: 0.5;
+            z-index: 2;
+        }
+
+        .slide.next {
+            transform: translateX(120%) scale(0.8) rotateY(-25deg);
+            opacity: 0.5;
+            z-index: 2;
+        }
+
+        /* Врачи */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .doctor-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .doctor-image {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            transition: 0.5s;
+        }
+
+        .doctor-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            transform: translateY(100%);
+            transition: 0.3s;
+        }
+
+        .doctor-card:hover .doctor-info {
+            transform: translateY(0);
+        }
+
+        /* Форма */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(0, 194, 255, 0.05);
+        }
+
+        /* Расписание */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .schedule-table th {
+            background: var(--primary);
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .schedule-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .schedule-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                gap: 1rem;
+                position: absolute;
+                top: 100%;
+                right: 5%;
+                background: rgba(42, 45, 52, 0.95);
+                padding: 1rem;
+                border-radius: 10px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .doctor-image {
+                height: 300px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            /* Адаптивные настройки для слайдера */
+            .slider {
+                height: 300px;
+            }
+
+            .slide {
+                width: 80%;
+            }
+        }
+
+        /* Декоративные элементы */
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.1;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="./logo.png" alt="">
+        </div>
+        <!-- Бургер-меню -->
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="nav-links">
+            <a href="#hero">Главная</a>
+            <a href="#services">Услуги</a>
+            <a href="#doctors">Врачи</a>
+            <a href="#schedule">Расписание</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Cтоматология <br> Иссык-Куль</h1>
+            <p>Инновационные технологии лечения и протезирования с гарантией результата</p>
+            <button class="cta-button">Записаться онлайн</button>
+        </div>
+        <div class="blob" style="top: -200px; right: -200px;"></div>
+    </section>
+
+
+
+    <!-- Новая секция: 3D-слайдер работ специалистов -->
+    <section id="slider" class="slider-section">
+        <h2 class="section-title">Работы наших специалистов</h2>
+        <div class="slider">
+            <div class="slide">
+                <img src="./img/photo1.jpg" alt="Работа специалиста 1">
+            </div>
+            <div class="slide">
+                <img src="./img/photo2.jpg" alt="Работа специалиста 2">
+            </div>
+            <div class="slide">
+                <img src="./img/photo3.jpg" alt="Работа специалиста 3">
+            </div>
+            <div class="slide">
+                <img src="./img/photo4.jpg" alt="Работа специалиста 4">
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <h2 class="section-title">Наши услуги</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Имплантация</h3>
+                <p>Передовые технологии восстановления зубов</p>
+            </div>
+            <div class="service-card">
+                <h3>Ортодонтия</h3>
+                <p>Исправление прикуса и коррекция улыбки с использованием современных методик.</p>
+            </div>
+            <div class="service-card">
+                <h3>Лечение зубов</h3>
+                <p>Комплексное лечение для поддержания здоровья и красоты вашей улыбки.</p>
+            </div>
+            <!-- Дополнительные услуги -->
+        </div>
+    </section>
+    <section id="doctors">
+        <h2 class="section-title">Наши специалисты</h2>
+        <div class="doctors-grid">
+            <div class="doctor-card">
+                <div class="doctor-image"
+                    style="background-image: url('https://cdn-0.aki.kg/st_runews//.storage/limon3/images/September2024/.thumbs/67b45008aed42fa657697f5db4030652_0_2500_0.jpg')">
+                </div>
+                <div class="doctor-info">
+                    <h3>Гүлжигит Калыков</h3>
+                    <p>Главный хирург-имплантолог</p>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image"
+                    style="background-image: url('https://dentalclinic.kg/wp-content/uploads/2015/12/kairat_mamyrkulov-min.jpg')">
+                </div>
+                <div class="doctor-info">
+                    <h3>Мамыркулов Кайрат</h3>
+                    <p>Стоматолог-хирург, имплантолог, ортодонт</p>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image"
+                    style="background-image: url('https://dentalclinic.kg/wp-content/uploads/2015/12/tolkun_rysbekovna-min.jpg')">
+                </div>
+                <div class="doctor-info">
+                    <h3>Джапарова Толкун</h3>
+                    <p>Стоматолог-терапевт высшей категории</p>
+                </div>
+            </div>
+            <div class="doctor-card">
+                <div class="doctor-image"
+                    style="background-image: url('https://dentalclinic.kg/wp-content/uploads/2015/12/mazhanova_dilyara-min.jpg')">
+                </div>
+                <div class="doctor-info">
+                    <h3>Мачанова Диляра</h3>
+                    <p>Стоматолог-терапевт</p>
+                </div>
+            </div>
+            <!-- Дополнительные специалисты -->
+        </div>
+    </section>
+
+    <section id="schedule">
+        <h2 class="section-title">Режим работы</h2>
+        <table class="schedule-table">
+            <tr>
+                <th>День недели</th>
+                <th>Часы работы</th>
+            </tr>
+            <tr>
+                <td>Понедельник</td>
+                <td>09:00 - 18:00</td>
+            </tr>
+            <tr>
+                <td>Вторник</td>
+                <td>09:00 - 18:00</td>
+            </tr>
+            <tr>
+                <td>Среда</td>
+                <td>09:00 - 18:00</td>
+            </tr>
+            <tr>
+                <td>Четверг</td>
+                <td>09:00 - 18:00</td>
+            </tr>
+            <tr>
+                <td>Пятница</td>
+                <td>09:00 - 18:00</td>
+            </tr>
+            <tr>
+                <td>Суббота</td>
+                <td>10:00 - 16:00</td>
+            </tr>
+            <tr>
+                <td>Воскресенье</td>
+                <td>Выходной</td>
+            </tr>
+            <!-- Дополнительное расписание -->
+        </table>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Онлайн запись</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Ваше имя" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Телефон" required>
+            </div>
+            <div class="form-group">
+                <select required>
+                    <option value="">Выберите услугу</option>
+                    <option>Консультация</option>
+                </select>
+            </div>
+            <button class="cta-button">Отправить заявку</button>
+        </form>
+    </section>
+
+    <script>
+        // Анимация секций при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Плавный скролл по якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Параллакс эффект для hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.querySelector('.hero').style.backgroundPositionY = `${scrolled * 0.5}px`;
+        });
+
+        // Анимация шапки при скролле
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(42,45,52,0.95)';
+            } else {
+                header.style.background = 'rgba(42,45,52,0.7)';
+            }
+        });
+
+        // Обработка бургер-меню
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        /* === Слайдер === */
+        const slides = document.querySelectorAll('.slide');
+        let currentIndex = 0;
+
+        function updateSlider() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('prev', 'active', 'next');
+                if (index === currentIndex) {
+                    slide.classList.add('active');
+                } else if (index === (currentIndex === 0 ? slides.length - 1 : currentIndex - 1)) {
+                    slide.classList.add('prev');
+                } else if (index === (currentIndex === slides.length - 1 ? 0 : currentIndex + 1)) {
+                    slide.classList.add('next');
+                }
+            });
+        }
+
+        updateSlider();
+
+        // Автоматическое переключение слайдов каждые 4 секунды
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlider();
+        }, 4000);
+    </script>
+</body>
+
+</html>
